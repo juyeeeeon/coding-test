@@ -90,3 +90,7 @@ Arrays.fill(arr, 0);
 while(!stk.isEmpty()) System.out.print(stk.remove(0));
 ```
 
+```java
+//originalArray의 i번째부터 j-1번째까지 원소들을 복사
+int[] tmp = Arrays.copyOfRange(originalArray, i, j);
+```
