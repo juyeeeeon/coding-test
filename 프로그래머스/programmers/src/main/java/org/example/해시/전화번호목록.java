@@ -8,7 +8,7 @@ public class 전화번호목록 {
 
         Arrays.sort(phone_book); //숫자로된 문자열은 사전식으로 정렬됨
 
-        HashSet<String> hs = new HashSet<>();
+        //HashSet<String> hs = new HashSet<>();
 
         for (int i = 0; i < phone_book.length-1; i++) {
             if (phone_book[i+1].startsWith(phone_book[i])) {

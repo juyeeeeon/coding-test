@@ -5,11 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-public class P1667_트리의지름 {
+public class P1167_트리의지름 {
 
     static int[] distance;
     static boolean[] visited;
     static ArrayList<Edge>[] arr;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
