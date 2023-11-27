@@ -1,74 +1,79 @@
 package org.example;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
-    static int[] row = new int[]{1, 0, -1, 0};
-    static int[] col = new int[]{0, 1, 0, -1};
+    public static void main(String[] args) {
+        // Create a new instance of the TeslaModels class
+        TeslaModels models = new TeslaModels(new HashMap<>());
 
-    static int N, M;
-    static boolean[][] visited;
-    static int[][] arr;
+        // Add information for Tesla models: "Model 3", "Model S", and "Model X"
+        models.addTeslaModel(new TeslaModel("Model 3", 39999, 250, 62));
+        models.addTeslaModel(new TeslaModel("Model S", 79999, 375, 82));
+        models.addTeslaModel(new TeslaModel("Model X", 89999, 330, 75));
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-
-        N = Integer.parseInt(st.nextToken());
-        M = Integer.parseInt(st.nextToken());
-
-        arr = new int[N + 1][M + 1];
-
-        for (int i = 0; i < N; i++) {
-            String readLine = br.readLine();
-            for (int j = 0; j < M; j++) {
-                arr[i+1][j+1] = Integer.parseInt(readLine.substring(j, j+1));
-            }
-        }
-
-
-        visited = new boolean[N + 1][M + 1];
-
-        BFS(1, 1);
-
-        System.out.println(arr[N][M]);
+        // Output the details of the Tesla model "Model S"
+        TeslaModel modelS = models.getTeslaModel("Model S");
+        System.out.println("Model Name: " + modelS.getName());
+        System.out.println("Price: $" + modelS.getPrice() + " USD");
+        System.out.println("Range: " + modelS.getRange() + " miles");
+        System.out.println("Battery Capacity: " + modelS.getBatteryCapacity() + " kWh");
 
     }
+}
 
-    private static void BFS(int i, int j) {
-        if (visited[i][j]) return;
+class TeslaModels {
+    // Declare the Map to store Tesla models
+    Map<String, TeslaModel> models;
 
-        Queue<Node> queue = new LinkedList<>();
-        queue.add(new Node(i, j));
-        visited[i][j] = true;
+    // Constructor to initialize HashMap object
 
-        while (!queue.isEmpty()) {
-            Node now = queue.poll();
-            for (int k = 0; k < 4; k++) {
-                int nr = row[k] + now.i;
-                int nc = col[k] + now.j;
-
-                if (nr >= 1 && nr <= N && nc >= 1 && nc <= M && arr[nr][nc] != 0 && !visited[nr][nc]) {
-                    queue.add(new Node(nr, nc));
-                    visited[nr][nc] = true;
-                    arr[nr][nc] = arr[now.i][now.j] + 1;
-                }
-            }
-        }
+    public TeslaModels(Map<String, TeslaModel> models) {
+        this.models = models;
     }
 
-    private static class Node {
-        int i;
-        int j;
 
-        public Node(int i, int j) {
-            this.i = i;
-            this.j = j;
-        }
+    // Define the addTeslaModel() Method
+    public void addTeslaModel(TeslaModel model) {
+        models.put(model.getName(), model);
+    }
+
+    // Define the getTeslaModel() Method
+    public TeslaModel getTeslaModel(String name) {
+        return models.get(name);
+    }
+}
+
+class TeslaModel {
+    // Declare variables for model name, price, range and battery capacity
+    private String name;
+    private int price;
+    private int range;
+    private int batteryCapacity;
+
+    // Constructor to initialize model name, price, range and battery capacity
+
+    public TeslaModel(String name, int price, int range, int batteryCapacity) {
+        this.name = name;
+        this.price = price;
+        this.range = range;
+        this.batteryCapacity = batteryCapacity;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public int getBatteryCapacity() {
+        return batteryCapacity;
     }
 }
