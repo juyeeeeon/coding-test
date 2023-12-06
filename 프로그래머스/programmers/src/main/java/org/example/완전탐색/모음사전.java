@@ -12,7 +12,6 @@ public class 모음사전 {
 
     public static int solution(String word) {
         int answer = 0;
-
         arr = new ArrayList<>();
 
         DFS("", 0);
@@ -29,6 +28,7 @@ public class 모음사전 {
 
     private static void DFS(String s, int len) {
         if (len == 5) return;
+
         for (String w : word) {
             String str = s.concat(w);
             arr.add(str);

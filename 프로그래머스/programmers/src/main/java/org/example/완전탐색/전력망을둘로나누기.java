@@ -16,6 +16,7 @@ public class 전력망을둘로나누기 {
 
     public static int solution(int n, int[][] wires) {
         arr = new ArrayList[n + 1];
+
         for (int i = 0; i < arr.length; i++) {
             arr[i] = new ArrayList<>();
         }
@@ -25,6 +26,7 @@ public class 전력망을둘로나누기 {
         for (int i = 0; i < wires.length; i++) {
             int s = wires[i][0];
             int e = wires[i][1];
+
             arr[s].add(e);
             arr[e].add(s);
         }
