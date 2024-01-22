@@ -1,4 +1,4 @@
-package org.example.정렬;
+package baekjoon.정렬;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,13 +1,12 @@
-package org.example.정렬;
+package baekjoon.정렬;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashSet;
 
-public class P1181_단어정렬_hash {
+public class P1181_단어정렬_stream {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -17,22 +16,15 @@ public class P1181_단어정렬_hash {
         for (int i = 0; i < N; i++) {
             arr[i] = br.readLine();
         }
+
         //시작
         long start = System.currentTimeMillis();
 
-        HashSet<String> hash = new HashSet<>();
-        for (String s : hash) {
-            hash.add(s);
-        }
-
-
-
-        String[] array = hash.toArray(String[]::new);
 
         //(String s1) -> s1.length() == String::length
-        Arrays.sort(array, Comparator.comparing(String::length).thenComparing(Comparator.naturalOrder()));
-/*        String[] array = Arrays.stream(arr).distinct().toArray(String[]::new);
-                                                            //value -> new String[value] == String[]::new*/
+        Arrays.sort(arr, Comparator.comparing(String::length).thenComparing(Comparator.naturalOrder()));
+        String[] array = Arrays.stream(arr).distinct().toArray(String[]::new);
+                                                            //value -> new String[value] == String[]::new
 
 
         //끝

@@ -1,4 +1,4 @@
-package org.example.탐색.dfs;
+package baekjoon.탐색.dfs;
 
 import java.io.*;
 import java.util.ArrayList;
