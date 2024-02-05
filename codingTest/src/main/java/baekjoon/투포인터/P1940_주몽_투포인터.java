@@ -1,4 +1,4 @@
-package baekjoon.자료구조.투포인터;
+package baekjoon.투포인터;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,9 +7,9 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 /**
- * O(N^2)
+ * O(N)
  */
-public class P1940_주몽_이중배열 {
+public class P1940_주몽_투포인터 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
@@ -22,15 +22,6 @@ public class P1940_주몽_이중배열 {
         }
         int answer = 0;
         Arrays.sort(arr);
-
-        for (int ptr1 = 0; ptr1 < arr.length-1; ptr1++) {
-            for (int ptr2 = ptr1+1; ptr2 < arr.length; ptr2++) {
-                int sum = arr[ptr1] + arr[ptr2];
-                if (sum == M) answer++;
-            }
-        }
-
-        /*
 
         int s = 0;
         int e = arr.length-1;
@@ -47,7 +38,7 @@ public class P1940_주몽_이중배열 {
             if (sum > M) {
                 e--;
             }
-        }*/
+        }
         System.out.println(answer);
     }
 }

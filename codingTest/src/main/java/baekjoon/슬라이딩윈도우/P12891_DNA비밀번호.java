@@ -1,4 +1,4 @@
-package baekjoon.자료구조.슬라이딩윈도우;
+package baekjoon.슬라이딩윈도우;
 
 import java.io.BufferedReader;
 import java.io.IOException;

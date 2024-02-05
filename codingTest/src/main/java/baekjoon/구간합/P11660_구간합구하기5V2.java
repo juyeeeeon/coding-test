@@ -1,9 +1,11 @@
-package baekjoon.자료구조.구간합;
+package baekjoon.구간합;
 
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class P11660_구간합구하기5V1 {
+/* S[i][j] = S[i][j-1] + S[i-1][j] - S[i-1][j-1] + A[i][j]
+ */
+public class P11660_구간합구하기5V2 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -17,7 +19,7 @@ public class P11660_구간합구하기5V1 {
         for (int row = 1; row <= N; row++) {
             st = new StringTokenizer(br.readLine());
             for (int col = 1; col <= N; col++) {
-                sMap[row][col] += sMap[row][col-1] + Integer.parseInt(st.nextToken());
+                sMap[row][col] = sMap[row][col-1] + sMap[row-1][col] - sMap[row-1][col-1] + Integer.parseInt(st.nextToken());
             }
         }
 
@@ -28,13 +30,8 @@ public class P11660_구간합구하기5V1 {
             int x2 = Integer.parseInt(st.nextToken());
             int y2 = Integer.parseInt(st.nextToken());
 
-            int sum = 0;
 
-            for (int row = x1; row <= x2; row++) {
-                sum += sMap[row][y2] - sMap[row][y1-1];
-            }
-
-            bw.write(Integer.toString(sum) + '\n');
+            bw.write(Integer.toString(sMap[x2][y2] - sMap[x2][y1-1] - sMap[x1-1][y2] + sMap[x1-1][y1-1]) + '\n');
         }
 
         bw.flush();

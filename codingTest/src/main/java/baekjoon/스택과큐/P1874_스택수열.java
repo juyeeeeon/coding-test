@@ -1,4 +1,4 @@
-package baekjoon.자료구조.스택과큐;
+package baekjoon.스택과큐;
 
 import java.io.*;
 import java.util.Stack;
