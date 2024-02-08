@@ -1,4 +1,4 @@
-package baekjoon.탐색;
+package baekjoon.조합;
 
 import java.io.BufferedReader;
 import java.io.IOException;

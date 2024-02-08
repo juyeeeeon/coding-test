@@ -1,4 +1,4 @@
-package baekjoon.재귀;
+package baekjoon.순열;
 
 import java.io.BufferedReader;
 import java.io.IOException;
