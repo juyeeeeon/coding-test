@@ -16,7 +16,6 @@ public class P2839_설탕배달 {
             if (N % 5 == 0) { //N이 5로 나누어 떨어질 때
                 result += N / 5;
                 N %= 5;
-                break;
             } else {
                 N -= 3; //3 횟수 증가
                 result++;
