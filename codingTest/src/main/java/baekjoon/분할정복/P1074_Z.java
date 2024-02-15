@@ -65,17 +65,17 @@ public class P1074_Z {
         else
             num += (n / 2) * (n / 2);
 
-        if (r >= startRow && r < startRow + n / 2 && c >= startCol + n/2 && c < startCol + n/2 + n / 2) //위오
+        if (r >= startRow && r < startRow + n / 2 && c >= startCol + n/2 && c < startCol + n) //위오
             func(startRow, startCol + n/2, n / 2);
         else
             num += (n / 2) * (n / 2);
 
-        if (r >= startRow + n / 2 && r < startRow + n / 2 + n / 2 && c >= startCol && c < startCol + n / 2) //아래왼
+        if (r >= startRow + n / 2 && r < startRow + n && c >= startCol && c < startCol + n / 2) //아래왼
             func(startRow + n / 2, startCol,n / 2);
         else
             num += (n / 2) * (n / 2);
 
-        if (r >= startRow + n / 2 && r < startRow + n / 2 + n / 2 && c >= startCol + n/2 && c < startCol + n/2 + n / 2) //아래오
+        if (r >= startRow + n / 2 && r < startRow + n && c >= startCol + n/2 && c < startCol + n) //아래오
             func(startRow + n / 2, startCol + n/2, n / 2);
         else
             num += (n / 2) * (n / 2);
