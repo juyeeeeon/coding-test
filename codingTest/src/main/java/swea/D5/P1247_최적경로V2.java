@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class P1247_최적경로 {
+public class P1247_최적경로V2 {
     static int T, N;
     static int company_x, company_y; //회사의 x, y좌표
     static int home_x, home_y; //집의 x, y좌표
@@ -35,14 +35,21 @@ public class P1247_최적경로 {
 
             visited = new boolean[N];
             minDistance = Integer.MAX_VALUE;
-            recursion(company_x, company_y, 0); //회사에서 출발
+            recursion(company_x, company_y, 0, 0); //회사에서 출발
 
             System.out.println("#" + test_case + " " + minDistance);
         }
     }
 
-    private static void recursion(int x, int y, int distance) {
-        if (allVisited()) { //모든 고객의 집을 방문하였다면(방문배열visited을 기저조건으로)
+    /**
+     *
+     * @param x
+     * @param y
+     * @param distance
+     * @param cnt : 방문횟수
+     */
+    private static void recursion(int x, int y, int distance, int cnt) {
+        if (cnt == N) { //모든 고객의 집을 방문하였다면(방문횟수cnt을 기저조건으로)
             minDistance = Math.min(minDistance, distance + Math.abs(x-home_x) + Math.abs(y-home_y));
             return;
         }
@@ -53,17 +60,9 @@ public class P1247_최적경로 {
             int nx = map[i][0];
             int ny = map[i][1];
             visited[i] = true;
-            recursion(nx, ny, distance + Math.abs(x - nx) + Math.abs(y - ny));
+            recursion(nx, ny, distance + Math.abs(x - nx) + Math.abs(y - ny), cnt + 1);
             visited[i] = false;
         }
 
-    }
-
-    private static boolean allVisited() {
-        for (boolean b : visited) {
-            if (!b) return false;
-        }
-
-        return true;
     }
 }

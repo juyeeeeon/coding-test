@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class P1873_상호의배틀필드 {
-    static int T, H, W, N;
+    static int T, H, W, N, trainX, trainY;
     static char[][] map;
     static char[] inst;
 
@@ -21,8 +21,8 @@ public class P1873_상호의배틀필드 {
             map = new char[H][W];
 
             //전차의 x, y좌표 초기값
-            int trainX = -1;
-            int trainY = -1;
+            trainX = -1;
+            trainY = -1;
 
             for (int r = 0; r < H; r++) {
                 String line = br.readLine();
@@ -45,15 +45,15 @@ public class P1873_상호의배틀필드 {
 
             for (char i : inst) {
                 //전차가 바라보는 방향을 위쪽으로 바꾸고, 한 칸 위의 칸이 평지라면 위 그 칸으로 이동한다.
-                if (i == 'U') trainX = instruction_U(trainX, trainY);
+                if (i == 'U') instruction_U();
                 //전차가 바라보는 방향을 아래쪽으로 바꾸고, 한 칸 아래의 칸이 평지라면 그 칸으로 이동한다.
-                else if (i == 'D') trainX = instruction_D(trainX, trainY);
+                else if (i == 'D') instruction_D();
                 //전차가 바라보는 방향을 왼쪽으로 바꾸고, 한 칸 왼쪽의 칸이 평지라면 그 칸으로 이동한다.
-                else if (i == 'L') trainY = instruction_L(trainX, trainY);
+                else if (i == 'L') instruction_L();
                 //전차가 바라보는 방향을 오른쪽으로 바꾸고, 한 칸 오른쪽의 칸이 평지라면 그 칸으로 이동한다.
-                else if (i == 'R') trainY = instruction_R(trainX, trainY);
+                else if (i == 'R') instruction_R();
                 //전차가 현재 바라보고 있는 방향으로 포탄을 발사한다.
-                else if (i == 'S') instruction_S(trainX, trainY);
+                else if (i == 'S') instruction_S();
             }
 
 
@@ -64,19 +64,18 @@ public class P1873_상호의배틀필드 {
         }
     }
 
-    private static int instruction_U(int trainX, int trainY) {
+    private static void instruction_U() {
         if (isValid(trainX - 1, trainY) && map[trainX - 1][trainY] == '.') {
             map[trainX - 1][trainY] = '^'; //한칸 위로 이동 후 위 방향으로 바꿈
             map[trainX][trainY] = '.'; //이전의 자리는 평지로
 
-            trainX = trainX -1; //전차의 x좌표 업데이트
+            trainX -= 1; //전차의 x좌표 업데이트
         } else {
             map[trainX][trainY] = '^';
         }
-        return trainX;
     }
 
-    private static int instruction_D(int trainX, int trainY) {
+    private static void instruction_D() {
         if (isValid(trainX + 1,trainY) && map[trainX + 1][trainY] == '.') {
             map[trainX + 1][trainY] = 'v'; //한칸 아래로 이동 후 아래 방향으로 바꿈
             map[trainX][trainY] = '.'; //이전의 자리는 평지로
@@ -84,10 +83,9 @@ public class P1873_상호의배틀필드 {
         } else {
             map[trainX][trainY] = 'v';
         }
-        return trainX;
     }
 
-    private static int instruction_L(int trainX, int trainY) {
+    private static void instruction_L() {
         if (isValid(trainX, trainY - 1) && map[trainX][trainY - 1] == '.') {
             map[trainX][trainY - 1] = '<'; //한칸 왼쪽으로 이동 후 왼쪽 방향으로 바꿈
             map[trainX][trainY] = '.'; //이전의 자리는 평지로
@@ -96,10 +94,9 @@ public class P1873_상호의배틀필드 {
         } else {
             map[trainX][trainY] = '<';
         }
-        return trainY;
     }
 
-    private static int instruction_R(int trainX, int trainY) {
+    private static void instruction_R() {
         if (isValid(trainX, trainY + 1) && map[trainX][trainY + 1] == '.') {
             map[trainX][trainY + 1] = '>'; //한칸 오른쪽으로 이동 후 오른쪽 방향으로 바꿈
             map[trainX][trainY] = '.'; //이전의 자리는 평지로
@@ -108,10 +105,9 @@ public class P1873_상호의배틀필드 {
         } else {
             map[trainX][trainY] = '>';
         }
-        return trainY;
     }
 
-    private static void instruction_S(int trainX, int trainY) {
+    private static void instruction_S() {
         if (map[trainX][trainY] == '^') { //위를 바라볼 때
             for (int r = trainX - 1; r >= 0; r--) {
                 if (map[r][trainY] == '*') { //벽돌

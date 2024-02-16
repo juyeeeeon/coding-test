@@ -79,15 +79,15 @@ public class P5644_무선충전V2 {
         int max = 0;
 
         //personA와 personB로부터 모든 BC들의 최대 충전합 구하기
-        for (int i = 0; i < A; i++) {
-            for (int j = 0; j < A; j++) {
+        for (int i = 0; i < A; i++) { //한 사람과 i번째 BC
+            for (int j = 0; j < A; j++) { //다른 한 사람과 j번째 BC
                 int sum = 0;
 
                 int pA = findChargeAmountInCurrentLocation(personA[t][0], personA[t][1], i);
                 int pB = findChargeAmountInCurrentLocation(personB[t][0], personB[t][1], j);
 
-                if (i != j) sum = pA + pB; //다른 BC이면
-                else sum = Math.max(pA, pB); //같은 BC이면
+                if (i != j) sum = pA + pB; //다른 BC이면 더하기
+                else sum = Math.max(pA, pB); //같은 BC이면 최대값 (같은 BC에 겹칠 때 1/2해봤자 합을 구하기 때문에 의미없음)
 
                 if (max < sum) max = sum;
             }
