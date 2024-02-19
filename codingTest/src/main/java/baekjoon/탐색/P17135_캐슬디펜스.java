@@ -12,7 +12,7 @@ public class P17135_캐슬디펜스 {
     static int N;       // 맵의 전체 행
     static int M;       // 맵의 전체 열
     static int D;       // 궁수 공격가능거리
-    static int enemy; // 적의 수
+    static int enemy, initEnemy = 0; // 적의 수
     static int[][] map, testMap; // 격자판
 
     // 배치 할 궁수 3명 저장 리스트
@@ -41,6 +41,8 @@ public class P17135_캐슬디펜스 {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < M; j++) {
                 map[i][j] = Integer.parseInt(st.nextToken());
+                if (map[i][j] == 1) initEnemy++;
+
             }
         }
 
@@ -65,12 +67,9 @@ public class P17135_캐슬디펜스 {
 
         // 완전탐색을 위한 반복문
         for (int i = start; i < M; i++) {
-            // 해당 위치에 궁수 배치
-            archers.add(new Archer(N, i));
-            // 다음 위치로 이동
-            comb(i + 1);
-            // 해당 위치의 궁수 제거
-            archers.remove(archers.size()-1);
+            archers.add(new Archer(N, i));// 해당 위치에 궁수 배치
+            comb(i + 1);// 다음 위치로 이동
+            archers.remove(archers.size()-1);// 해당 위치의 궁수 제거
         }
     }
 
@@ -80,7 +79,7 @@ public class P17135_캐슬디펜스 {
 
         // 남은 적의 수 카운트를 위한 변수
         // 초기값은 그냥 99로 줌
-        enemy = 99;
+        enemy = initEnemy;
 
         // 적이 1명 이상이면 게임 계속 진행
         while (true) {
@@ -103,7 +102,7 @@ public class P17135_캐슬디펜스 {
                     }
                 }
             }
-            searchEnemy();
+            nextRound();
         }
 
         // 테스트가 종료되고 적을 처치한 수가 여태까지 저장된 값보다 크면 값 갱신
@@ -122,30 +121,26 @@ public class P17135_캐슬디펜스 {
         }
     }
 
-    private static void searchEnemy() {
+    private static void nextRound() {
         // 남아있는 적의 수를 카운트 하기 위해 0으로 초기화
         enemy = 0;
 
         // 테스트 맵 전체 탐색
-        for (int j = 0; j < M; j++) {
-            for (int i = N - 1; i >= 0; i--) {
+        for (int c = 0; c < M; c++) {
+            for (int r = N - 1; r >= 0; r--) {
                 // 해당 좌표에 적이 있으면
-                if (testMap[i][j] == 1) {
-                    // 아래로 한칸 이동하기 위해 좌표 값 계산
-                    int moveR = i + 1;
-
+                if (testMap[r][c] == 1) {
+                    testMap[r][c] = 0;
                     // 아래로 한칸 이동 했을 때 맵을 벗어나면
                     // 맵을 벗어나서 적은 사라짐 (해당 좌표 빈칸으로 갱신)
-                    if (moveR >= N) testMap[i][j] = 0;
-                    else {
-                        // 맵을 벗어나지 않으면 적은 아래로 한칸 이동
-                        // (해당 좌표 빈칸으로 갱신, 한칸 아래 좌표 1로 갱신)
-                        testMap[i][j] = 0;
-                        testMap[moveR][j] = 1;
+                    if (r + 1 >= N) continue;
 
-                        // 적이 남아있으므로 카운트변수 1 증가
-                        enemy++;
-                    }
+                    // 맵을 벗어나지 않으면 적은 아래로 한칸 이동
+                    // (해당 좌표 빈칸으로 갱신, 한칸 아래 좌표 1로 갱신)
+                    testMap[r + 1][c] = 1;
+
+                    // 적이 남아있으므로 카운트변수 1 증가
+                    enemy++;
                 }
             }
         }
