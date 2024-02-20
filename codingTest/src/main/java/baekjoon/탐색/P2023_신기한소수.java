@@ -1,4 +1,4 @@
-package baekjoon.dfs.탐색;
+package baekjoon.탐색;
 
 import java.io.BufferedReader;
 import java.io.IOException;
