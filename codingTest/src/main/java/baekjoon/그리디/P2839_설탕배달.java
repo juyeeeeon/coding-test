@@ -23,7 +23,7 @@ public class P2839_설탕배달 {
         }
 
         if (N == 0) System.out.println(result); //나누어 떨어졌을 때
-        else System.out.println(-1); //나누어 떨이지지 않을 때
+        else System.out.println(-1); //나누어 떨어지지 않을 때
 
     }
 }
