@@ -40,9 +40,8 @@ public class P13023_ABCDE {
             if (arrive) break;
         }
 
-        if (arrive) {
-            bw.write(Integer.toString(1));
-        }else bw.write(Integer.toString(0));
+        if (arrive) bw.write(Integer.toString(1));
+        else bw.write(Integer.toString(0));
 
         bw.flush();
         bw.close();

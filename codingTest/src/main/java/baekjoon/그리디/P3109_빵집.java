@@ -31,7 +31,6 @@ public class P3109_빵집 {
 
         for (int r = 0; r < R; r++) {
             finished = false;
-            visited[r][0] = true;
             DFS(r, 0);
         }
 
@@ -49,15 +48,20 @@ public class P3109_빵집 {
             return;
         }
 
+        visited[r][c] = true;
+
         for (int d = 0; d < deltas.length; d++) {
             int nr = r + deltas[d][0];
             int nc = c + deltas[d][1];
 
-            if (nr >= 0 && nc >= 0 && nr < R && nc < C && map[nr][nc] == '.' && !visited[nr][nc]) {
-                visited[nr][nc] = true;
+            if (isValid(nr, nc) && map[nr][nc] == '.' && !visited[nr][nc]) {
                 DFS(nr, nc);
                 if (finished) return;
             }
         }
+    }
+
+    private static boolean isValid(int r, int c) {
+        return r >= 0 && c >= 0 && r < R && c < C;
     }
 }

@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 /**
- * M개의 치킨집 조합 => 집과 치킨집의 거리의 최소값 => 합
+ * M개의 치킨집 조합(좌표) => 집(좌표)과 치킨집의 거리의 최소값 => 합
  */
 public class P15686_치킨배달 {
     static int N, M;
