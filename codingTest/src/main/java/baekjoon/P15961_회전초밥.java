@@ -26,50 +26,44 @@ public class P15961_회전초밥 {
             belt[i] = Integer.parseInt(br.readLine());
         }
 
-        sushi = new int[d+1];
+        sushi = new int[d+1]; //종류가 1~30(idx)인 스시의 개수 저장 배열
 
-        int sushiNum = 0;
+        int sushiNum = 0; //선택한 초밥의 종류의 수
         for (int i = 0; i < k; i++) { //벨트의 0부터 k개의 스시로 초기화
-            if (sushi[belt[i]] == 0) {
+            if (sushi[belt[i]] == 0) { //기존에 없던 종류이면
                 sushi[belt[i]]++;
-                sushiNum++;
+                sushiNum++; //종류 수 증가
             }else{
                 sushi[belt[i]]++;
             }
         }
 
-        if ((belt[N - 1] == c || belt[k] == c) && sushi[c] == 0) maxCnt = Math.max(maxCnt, sushiNum + 1);
-        else maxCnt = Math.max(maxCnt, sushiNum);
+        if (sushi[c] == 0) maxCnt = Math.max(maxCnt, sushiNum + 1); //쿠폰초밥을 고르지 않았다면 종류 수 증가
+        else maxCnt = Math.max(maxCnt, sushiNum); //쿠폰초밥을 이미 골랐다면 종류 수는 증가하지 않음
 
 
-        for (int i = 1; i <= N - 1; i++) {
+        for (int i = 1; i <= N; i++) { //i: 벨트 위 시작 초밥 위치
             int Lptr = i;
             int Rptr = i + k - 1;
             if (Rptr >= N) Rptr %= N;
 
-            if (sushi[belt[Lptr - 1]] > 1) {
-                sushi[belt[Lptr - 1]]--;
-            } else {
-                sushi[belt[Lptr - 1]]--;
-                sushiNum--;
+            if (sushi[belt[Lptr - 1]] > 1) { //이전에 골랐던 초밥의 개수가 2 이상이면
+                sushi[belt[Lptr - 1]]--; //개수만 하나 감소
+            } else {//이전에 골랐던 초밥의 개수가 1이면
+                sushi[belt[Lptr - 1]]--; //개수 감소
+                sushiNum--; //종류 감소
             }
 
-            if (sushi[belt[Rptr]] == 0) {
-                sushi[belt[Rptr]]++;
-                sushiNum++;
-            }else{
-                sushi[belt[Rptr]]++;
+            if (sushi[belt[Rptr]] == 0) {//새로 고른 초밥의 개수가 0이면
+                sushi[belt[Rptr]]++; //개수 증가
+                sushiNum++; //종류 증가
+            }else{ //새로 고른 초밥의 개수가 0이 아니면
+                sushi[belt[Rptr]]++; //개수만 하나 증가
             }
 
-            if ((belt[Lptr-1] == c || belt[(Rptr+1)%N] == c) && sushi[c] == 0) maxCnt = Math.max(maxCnt, sushiNum + 1);
-            else maxCnt = Math.max(maxCnt, sushiNum);
+            if (sushi[c] == 0) maxCnt = Math.max(maxCnt, sushiNum + 1);//쿠폰초밥을 고르지 않았다면 종류 수 증가
+            else maxCnt = Math.max(maxCnt, sushiNum);//쿠폰초밥을 이미 골랐다면 종류 수는 증가하지 않음
         }
-
-        boolean flag = false;
-        for (int i : belt) {
-            if (i == c) flag = true;
-        }
-        if (!flag) maxCnt += 1;
 
         System.out.println(maxCnt);
     }

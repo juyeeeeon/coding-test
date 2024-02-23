@@ -7,6 +7,10 @@ import java.util.StringTokenizer;
 /**
  * kruscal's Algorithm
  * Union-Find + PriorityQueue => (V-1)개의 간선 구하기
+ *
+ * 섬들이 좌표에 고정되어 있으므로
+ * 거리(=tax)가 짧은 순으로 우선순위큐에 넣기 때문에
+ * 연결선들이 겹칠 걱정 필요없음
  */
 public class P1251_하나로 {
     static int T, N;
