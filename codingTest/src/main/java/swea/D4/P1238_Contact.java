@@ -32,17 +32,12 @@ public class P1238_Contact {
                 arr[from].add(to);
             }
 
-            for (int i = 0; i < arr.length; i++) {
-                Collections.sort(arr[i]); //오름차순 정렬
-            }
-
+            // depth가 가장 큰 값이 수를 출력
+            // depth가 같으면 값이 큰 수를 출력
             maxDepth = Integer.MIN_VALUE;
             maxValue = Integer.MIN_VALUE;
             bfs(S);
 
-/*            while (!result.isEmpty()) {
-                System.out.println(result.poll().value);
-            }*/
             bw.write("#" + test_case + " " + maxValue + '\n');
         }
 
@@ -60,11 +55,14 @@ public class P1238_Contact {
         while (!queue.isEmpty()) {
             Node cur = queue.poll();
 
+            //현재 노드가 maxDepth와 같고 maxValue보다 값이 크면
             if (cur.depth == maxDepth && cur.value > maxValue) {
-                maxValue = cur.value;
+                maxValue = cur.value; //maxValue값 업데이트
             }
 
+            //현재 노드의 depth가 maxDepth보다 크면
             if (cur.depth > maxDepth) {
+                //maxValue와 maxDepth 업데이트
                 maxValue = cur.value;
                 maxDepth = cur.depth;
             }

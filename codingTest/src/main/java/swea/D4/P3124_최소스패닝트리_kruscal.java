@@ -4,7 +4,11 @@ import java.io.*;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
-public class P3124_최소스패닝트리 {
+/**
+ * Kruscal 알고리즘 (간선 중심 MST 구하기)
+ * Union-Find 알고리즘 + Priority Queue 사용 => (V-1)개의 간선 구하기
+ */
+public class P3124_최소스패닝트리_kruscal {
     static int T;
     static int V, E; //정점의 개수, 간선의 개수
     static int[] parents;
