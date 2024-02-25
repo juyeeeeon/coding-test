@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class P1208_Flatten {
-    static int dump; //주어진 dump 횟수
+    static int dump, output; //주어진 dump 횟수
     static int[] boxesH; //박스의 높이
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -26,6 +26,7 @@ public class P1208_Flatten {
             Arrays.sort(boxesH); //박스의 높이를 정렬
             dump(0, test_case);
 
+            System.out.println("#" + test_case + " " + output); //최고점과 최저점의 높이 차를 반환
         }
     }
 
@@ -41,7 +42,7 @@ public class P1208_Flatten {
 
         if (hDiff == 0 || hDiff == 1 || i == dump) {
             Arrays.sort(boxesH);
-            System.out.println("#" + test_case + " " + hDiff); //최고점과 최저점의 높이 차를 반환
+            output = hDiff;
             return;
         }
 

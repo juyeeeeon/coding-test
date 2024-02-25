@@ -16,7 +16,7 @@ public class P6808_규영이와인영이의카드게임 {
         for (int test_case = 1; test_case <= T; test_case++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             cards = new int[9];
-            visited = new boolean[19]; //1~19까지의 수들이 사용되었는지
+            visited = new boolean[19]; //1~18까지의 수들이 사용되었는지
             for (int i = 0; i < cards.length; i++) {
                 int number = Integer.parseInt(st.nextToken());
                 cards[i] = number;

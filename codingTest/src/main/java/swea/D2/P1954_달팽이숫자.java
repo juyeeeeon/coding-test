@@ -34,24 +34,28 @@ public class P1954_달팽이숫자 {
                 if (isRange(nr, nc)) {
                     while (d == 0 && nc < N && !visited[nr][nc]) { //오른쪽으로
                         visited[nr][nc] = true;
+                        //좌표 업데이트
                         r = nr;
                         c = nc;
                         map[nr][nc++] = num++;
                     }
                     while (d == 1 && nr < N && !visited[nr][nc]) { //아래쪽으로
                         visited[nr][nc] = true;
+                        //좌표 업데이트
                         r = nr;
                         c = nc;
                         map[nr++][nc] = num++;
                     }
                     while (d == 2 && nc >= 0 && !visited[nr][nc]) { //왼쪽으로
                         visited[nr][nc] = true;
+                        //좌표 업데이트
                         r = nr;
                         c = nc;
                         map[nr][nc--] = num++;
                     }
                     while (d == 3 && nr < N && !visited[nr][nc]) { //위쪽으로
                         visited[nr][nc] = true;
+                        //좌표 업데이트
                         r = nr;
                         c = nc;
                         map[nr--][nc] = num++;

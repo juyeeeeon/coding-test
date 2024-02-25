@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
 public class P15650_N과M2 {
     static int N; //1 ~ N 까지의 수
     static int M; //길이가 M 인 수열
-    static int[] numbers; //조건을 만족하는 수열
+    static int[] buffer; //조건을 만족하는 수열
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -16,7 +16,7 @@ public class P15650_N과M2 {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        numbers = new int[M];
+        buffer = new int[M];
 
         //조합
         comb(0, 1);
@@ -29,7 +29,7 @@ public class P15650_N과M2 {
      */
     private static void comb(int len, int start) {
         if (len == M) {
-            for (int number : numbers) {
+            for (int number : buffer) {
                 System.out.print(number + " ");
             }
             System.out.println();
@@ -37,7 +37,7 @@ public class P15650_N과M2 {
         }
 
         for (int i = start; i <= N; i++) {
-            numbers[len] = i;
+            buffer[len] = i;
             comb(len + 1, i + 1);
         }
     }

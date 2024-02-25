@@ -28,28 +28,18 @@ public class P1210_Ladder1V2 {
             br.readLine();
 
             map = new int[N][N];
-            for (int row = 0; row < N; row++) {
-                st = new StringTokenizer(br.readLine());
-                for (int col = 0; col < N; col++) {
-                    map[row][col] = Integer.parseInt(st.nextToken());
-                }
-                /* //속도가 더 느림
-                map[row] = Arrays.stream(br.readLine().split(" "))
-                        .mapToInt(Integer::parseInt)
-                        .toArray();
-                 */
-            }
+            visited = new boolean[N][N];
 
             int dr = N - 1;
             int dc = -1;
 
-            visited = new boolean[N][N];
-
-            // 목표 지점 찾기
-            for (int col = 0; col < N; col++) {
-                if (map[N-1][col] == DESTINATION) dc = col;
+            for (int row = 0; row < N; row++) {
+                st = new StringTokenizer(br.readLine());
+                for (int col = 0; col < N; col++) {
+                    map[row][col] = Integer.parseInt(st.nextToken());
+                    if (row == N-1 && map[row][col] == DESTINATION) dc = col;
+                }
             }
-
 
             while (dr > 0) {
                 for (int d = 0; d < deltas.length; d++) { //왼쪽, 오른쪽, 위 탐색
@@ -57,9 +47,10 @@ public class P1210_Ladder1V2 {
                     int nc = dc + deltas[d][1];
 
                     if (isRange(nr, nc) && map[nr][nc] == LADDER && !visited[nr][nc]) {
+                        //좌표 업데이트
                         dr = nr;
                         dc = nc;
-                        visited[dr][dc] = true;
+                        visited[dr][dc] = true; //방문처리
 
                         break;
                     }

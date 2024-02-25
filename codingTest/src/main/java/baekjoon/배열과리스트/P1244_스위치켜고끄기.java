@@ -38,28 +38,30 @@ public class P1244_스위치켜고끄기 {
         }
     }
 
+    /**
+     *
+     * @param number 의 배수만큼 스위치 바꿈
+     */
     private static void male(int number) {
-        for (int i = 1; i <= switchNum; i++) { //idx(=i)가 number의 배수이면 스위치 바꿈
-            if (i % number == 0) turnSwitch(i);
+        int i = 1;
+        while (number * i <= switchNum) {
+            turnSwitch(number * i);
+            i++;
         }
     }
 
     private static void female(int number) {
+        turnSwitch(number);
 
-        int left = number;
-        int right = left;
+        int left = number - 1;
+        int right = number + 1;
 
-        if (left >= 1 && right <= switchNum) {
-            while (left >= 1 && right <= switchNum && switches[left] == switches[right]) {
-                left--;
-                right++;
-            }
-
-            //left 인덱스나 right 인덱스가 범위 안에 존재하지 않거나 스위치가 다르면 while 조건 통과
-            turnSwitchSpan(left + 1, right - 1); //따라서 left+1 인덱스 값부터 right-1 인덱스 값까지의 스위치를 바꿈
-        } else turnSwitch(number);
-
-
+        while (left >= 1 && right <= switchNum && switches[left] == switches[right]) {
+            turnSwitch(left);
+            turnSwitch(right);
+            left--;
+            right++;
+        }
     }
 
     /**
@@ -69,16 +71,5 @@ public class P1244_스위치켜고끄기 {
     private static void turnSwitch(int idx) {
         if (switches[idx] == 1) switches[idx] = 0;
         else switches[idx] = 1;
-    }
-
-    /**
-     * left 인덱스부터 right 인덱스까지 스위치 바꿈
-     * @param left
-     * @param right
-     */
-    private static void turnSwitchSpan(int left, int right) {
-        for (int i = left; i <= right ; i++) {
-            turnSwitch(i);
-        }
     }
 }

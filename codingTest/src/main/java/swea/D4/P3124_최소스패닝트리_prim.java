@@ -72,7 +72,7 @@ public class P3124_최소스패닝트리_prim {
             if (vertexCnt == V)  break;
 
             for (Node next : arr[cur.vertex]) {
-                if (visited[next.vertex]) continue;
+//                if (visited[next.vertex]) continue;
                 queue.add(next);
             }
         }

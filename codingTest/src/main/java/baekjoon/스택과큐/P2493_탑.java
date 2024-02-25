@@ -18,21 +18,23 @@ public class P2493_탑 {
 
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        for (int i = 0; i < N; i++) {
+        //첫번째 탑 queue에 넣기
+        tops.add(new int[]{Integer.parseInt(st.nextToken()), idx++});
+        bw.write(0 + " "); //첫번째 탑은 수신하는 탑이 무조건 없음
+
+        for (int i = 1; i < N; i++) {
             int height = Integer.parseInt(st.nextToken());
 
-            boolean findHigher = false;
             while (!tops.isEmpty()) {
-                if (tops.peek()[0] > height) { //탑의 높이 비교
-                    findHigher = true;
+                if (tops.peek()[0] > height) { //현재 탑이 왼쪽에 있는 탑보다 작으면
                     bw.write(tops.peek()[1] + " "); //해당 탑의 인덱스 write
                     break;
-                } else {
-                    tops.pop();
+                } else { //현재 탑이 왼쪽에 있는 탑보다 크면
+                    tops.pop(); //해당 탑 제거
                 }
             }
 
-            if (!findHigher) {
+            if (tops.empty()) {
                 bw.write(0 + " "); //레이저 신호를 수신하는 탑이 존재하지 않으면 0 출력
             }
 
