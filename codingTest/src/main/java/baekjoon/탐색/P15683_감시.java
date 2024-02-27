@@ -99,6 +99,15 @@ public class P15683_감시 {
     }
 
     // CCTV로 볼 수 있는 칸을 기록한다.
+
+    /**
+     *
+     * @param x cctv의 x좌표
+     * @param y cctv의 y좌표
+     * @param dir cctv가 바라보는 방향
+     * @param visit 방문배열
+     * @return
+     */
     private static boolean[][] search(int x, int y, int[] dir, boolean[][] visit) {
         boolean[][] copyVisited = new boolean[N][M];
 

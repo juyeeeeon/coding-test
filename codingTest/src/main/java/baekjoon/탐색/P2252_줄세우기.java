@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
+/**
+ * 위상정렬
+ */
 public class P2252_줄세우기 {
     static int N, M;
     static int[] inDegrees; //진입차수저장 배열
