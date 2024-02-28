@@ -1,39 +1,23 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    static long callCnt1, callCnt2;
-    static long[] memo;
-
+    //화폐 단위는 1, 4, 6
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
+        int N = sc.nextInt(); //목표 금액
+        int[] D = new int[N + 1]; // 각 금액을 만드는 최소 동전 수(최적해)
 
-        memo = new long[N + 1]; //메모된 값 리턴하기!
-        memo[0] = 0;
-        memo[1] = 1;
+        D[0] = 0; //점화식으로 값을 구할 수 없는 대상 초기화!
+        for (int i = 1; i <= N; i++) { // i: 금액
+            int min = D[i-1] + 1; //1원을 사용했을 경우 임시 최적해
+            if (i >= 4) min = Math.min(min, D[i - 4] + 1); //4원을 사용했을 경우 임시 최적해
+            if (i >= 6) min = Math.min(min, D[i - 6] + 1); //6원을 사용했을 경우 임시 최적해
 
-        System.out.println(fibo2(N));
-        System.out.println("(memoization 사용) 함수 호출 횟수 : " + callCnt2);
-
-        System.out.println(fibo1(N));
-        System.out.println("함수 호출 횟수 : " + callCnt1);
-    }
-
-    //memoization 사용X
-    static long fibo1(int n) {
-        callCnt1++;
-        if (n<2) return n;
-        return fibo1(n - 1) + fibo1(n - 2);
-    }
-
-    //memoizaton 사용
-    static long fibo2(int n){
-        callCnt2++;
-        //메모 안되어 있으면 계산 후 메모하기
-        if (n >= 2 && memo[n] == 0) {
-            memo[n] = fibo2(n - 1) + fibo2(n - 2);
+            D[i] = min;
         }
 
-        return memo[n]; //메모된 값 리턴하기!
+        System.out.println(Arrays.toString(D));
+        System.out.println(D[N]);
     }
 }

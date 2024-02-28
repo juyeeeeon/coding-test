@@ -73,9 +73,9 @@ public class P1753_최단경로 {
             visited[cur.v] = true;
 
             for (Node node : arr[cur.v]) {
-                if (distance[node.v] > distance[cur.v] + node.w) {
-                    distance[node.v] = distance[cur.v] + node.w;
-                    pq.add(new Node(node.v, distance[node.v]));
+                if (distance[node.v] > distance[cur.v] + node.distance) {
+                    distance[node.v] = distance[cur.v] + node.distance;
+                    pq.add(new Node(node.v, distance[node.v])); //주어진 출발점에서 현재까지 node.v까지의 거리의 최솟값
                 }
             }
         }
@@ -83,16 +83,16 @@ public class P1753_최단경로 {
 
     static class Node implements Comparable<Node>{
         int v;
-        int w;
+        int distance; //주어진 출발점에서 현재까지 v까지의 거리의 최솟값
 
         public Node(int v, int w) {
             this.v = v;
-            this.w = w;
+            this.distance = w;
         }
 
         @Override
         public int compareTo(Node o) {
-            return this.w - o.w;
+            return this.distance - o.distance;
         }
     }
 }

@@ -8,7 +8,7 @@ package 데일리실습.동적프로그래밍;
  * 이와 같은 규칙으로 층의 아파트를 칠할 수 있는 방법의 수를 f(n)이라 하면 다음 그림과
  * 같이 f(1) = 2, f(2) = 3 이다. f(8)은 얼마인가? 55
  */
-public class P1_아파트색칠하기 {
+public class P1_아파트색칠하기V2 {
     static int[][] memoization;
 
     public static void main(String[] args) {
@@ -20,15 +20,11 @@ public class P1_아파트색칠하기 {
         memoization[2][0] = 2;
         memoization[2][1] = 1;
 
-        System.out.println(dp(8));
-    }
-
-    private static int dp(int floor) {
-        if (floor > 2 && (memoization[floor][0] == 0)) {
-            memoization[floor][0] = dp(floor - 1);
-            memoization[floor][1] = dp(floor - 2);
+        for (int i = 3; i <= 8; i++) {
+            memoization[i][0] = memoization[i - 1][0] + memoization[i - 1][1]; //맨 윗층의 노란색은 모든 색 위에 올라갈 수 있음
+            memoization[i][1] = memoization[i - 2][0] + memoization[i - 2][1]; //맨 윗층의 파란색은 노란색 위에만 올라갈 수 있음
         }
 
-        return memoization[floor][0] + memoization[floor][1];
+        System.out.println(memoization[8][0] + memoization[8][1]);
     }
 }
