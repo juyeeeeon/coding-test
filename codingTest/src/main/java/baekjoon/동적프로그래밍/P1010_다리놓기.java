@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+//nCk = n-1Ck + n-cCk-1
 public class P1010_다리놓기 {
     static int T, K, N;
 
@@ -18,6 +19,8 @@ public class P1010_다리놓기 {
             st = new StringTokenizer(br.readLine());
             K = Integer.parseInt(st.nextToken());
             N = Integer.parseInt(st.nextToken());
+
+
 
             comb = new int[N+1][N+1];
             for (int n = 0; n <= N; n++) {

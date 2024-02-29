@@ -6,12 +6,9 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class P1767_프로세서연결하기V2 {
-    static int N, count;
-    static int maxCoreNum;
-    static int result;
-    static int[][] map;
-    static ArrayList<int[]> cores;
+    static int N, max, totalCount, min, map[][]; //멕시노스크기, 최대코어수, 비가장자리코어수, 최소전선길이합, 멕시노스셀정보
     static final int[][] deltas = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
+    static ArrayList<int[]> list; //비가장자리 코어 리스트
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -21,83 +18,102 @@ public class P1767_프로세서연결하기V2 {
 
         for (int test_case = 1; test_case <= T; test_case++) {
             N = Integer.parseInt(br.readLine());
-            cores = new ArrayList<>();
             map = new int[N][N];
+            list = new ArrayList<>();
+
+            //값 초기화
+            max = 0;
+            totalCount = 0;
+            min = Integer.MAX_VALUE;
 
             for (int i = 0; i < N; i++) {
                 st = new StringTokenizer(br.readLine());
                 for (int j = 0; j < N; j++) {
                     map[i][j] =Integer.parseInt(st.nextToken());
-                    if (map[i][j] == 1 && i != 0 && i != N - 1 && j != 0 && j != N - 1) //가장자리에 위치하지 않은 코어이면
-                        cores.add(new int[]{i, j});
+                    if (map[i][j] == 1 && i > 0 && i < N - 1 && j > 0 && j < N - 1) {//가장자리에 위치하지 않은 코어이면
+                        list.add(new int[]{i, j});
+                        totalCount++;
+                    }
+                }
+            } //멕시노스 셀 정보 입력 및 비가장자리 코어 리스트 생성
+
+            go(0, 0, 0);
+
+            System.out.println("#" + test_case + " " + min);
+        }
+    }
+
+    /**
+     * @param idx
+     * @param cCnt 처리한 코어 갯수
+     * @param lCnt 전선길이 합
+     */
+    static void go(int idx, int cCnt, int lCnt) { //현재 코어로 전선처리 시도
+        if (cCnt + (totalCount - idx) < max) return; //가지치기
+
+        if (idx == totalCount) {
+            if (max < cCnt) {
+                max = cCnt;
+                min = lCnt;
+            } else if (max == cCnt) {
+                if (min > lCnt) {
+                    min = lCnt;
                 }
             }
 
-            //값 초기화
-            maxCoreNum = Integer.MIN_VALUE;
-            result = Integer.MAX_VALUE;
-
-            dfs(0, 0, 0);
-            System.out.println("#" + test_case + " " + result);
-        }
-    }
-
-    /**
-     *
-     * @param idx cores의 인덱스
-     * @param coreNum 현재까지 선택된 코어의 개수
-     * @param len 현재까지 연결된 코어의 전선의 길이
-     */
-    private static void dfs(int idx, int coreNum, int len) {
-        if (idx == cores.size()) { //모든 코어를 탐색하였다면
-            if (maxCoreNum < coreNum) { //선택된 코어의 수가 maxCoreNum보다 크면
-                maxCoreNum = coreNum; //maxCoreNum, result 업데이트
-                result = len;
-            } else if (maxCoreNum == coreNum) { //선택된 코어의 수가 maxCoreNum과 같다면
-                if (result > len) result = len; //현재까지 연결된 코어의 전선의 길이가 result 보다 작으면 업데이트
-            }
             return;
         }
 
-        for (int d = 0; d < 4; d++) { //네방향 탐색
-            if (isConnect(cores.get(idx), d)) { // idx번째 코어가 d방향으로 연결가능하면
-                fill(cores.get(idx), d, 2); //idx번째 코어를 d방향으로 연결
-                dfs(idx + 1, coreNum + 1, len + count); // 다음 코어로
-                fill(cores.get(idx), d, 0); //원복
+        int[] cur = list.get(idx);
+        int r = cur[0];
+        int c = cur[1];
+
+        //사방으로 시도
+        for (int d = 0; d < 4; d++) {
+            if (isAvailable(r, c, d)) {
+                int len = setStatus(r, c, d, 2);//전선 놓기
+                go(idx + 1, cCnt + 1, lCnt + len); //다음 코어 가기
+                setStatus(r, c, d, 0); // 전선 지우기
             }
         }
 
-        dfs(idx + 1, coreNum, len); // idx번째 코어 선택 안하고 다음 코어로
+        //전선 놓지 않기
+        go(idx + 1, cCnt, lCnt);
     }
 
-    private static void fill(int[] core, int dir, int value) {
-        count = 0;
+    /**
+     * r,c 위치에서 d방향으로 전선놓기가 가능한지 체크
+     */
+    static boolean isAvailable(int r, int c, int d) {
+        int nr = r;
+        int nc = c;
 
-        int r = core[0] + deltas[dir][0];
-        int c = core[1] + deltas[dir][1];
-        while (r >= 0 && c >= 0 && r < N && c < N) {
-            map[r][c] = value;
-            count++;
-            r = r + deltas[dir][0];
-            c = c + deltas[dir][1];
+        while (true) {
+            nr += deltas[d][0];
+            nc += deltas[d][1];
+
+            if (nr < 0 || nc < 0 || nr >= N || nc >= N) return true;
+            if (map[nr][nc] != 0) return false;
         }
     }
 
     /**
-     *
-     * @param core 선택된 코어
-     * @param dir 전선의 방향
-     * @return 연결가능여부
+     * r,c위치(코어위치)에서 d방향으로 s(2:전선, 0:빈칸)로 상태 set
      */
-    private static boolean isConnect(int[] core, int dir) {
-        int r = core[0] + deltas[dir][0];
-        int c = core[1] + deltas[dir][1];
+    static int setStatus(int r, int c, int d, int s) {
+        int nr = r;
+        int nc = c;
+        int cnt = 0;
 
-        while (r >= 0 && c >= 0 && r < N && c < N) {
-            if (map[r][c] != 0) return false;
-            r = r + deltas[dir][0];
-            c = c + deltas[dir][1];
+        while (true) {
+            nr += deltas[d][0];
+            nc += deltas[d][1];
+
+            if (nr < 0 || nc < 0 || nr >= N || nc >= N) break;
+            map[nr][nc] = s;
+            cnt++; //처리한 빈칸의 개수
         }
-        return true;
+
+        return cnt;
     }
 }

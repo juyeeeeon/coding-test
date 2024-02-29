@@ -22,6 +22,9 @@ public class P1600_말이되고픈원숭이 {
         W = Integer.parseInt(st.nextToken());
         H = Integer.parseInt(st.nextToken());
         map = new int[H][W];
+
+        // 같은 위치에 도달했다고 해도
+        // 말처럼 움직인 횟수가 다르다면 그 상태는 서로 다른 상태로 간주
         visited = new boolean[H][W][K+1];
 
         for (int r = 0; r < H; r++) {
@@ -40,17 +43,17 @@ public class P1600_말이되고픈원숭이 {
     private static void bfs() {
         Queue<Node> queue = new ArrayDeque<>();
 
-        queue.add(new Node(0, 0, K, 0));
+        queue.add(new Node(0, 0, 0, 0));
 
         while (!queue.isEmpty()) {
             Node cur = queue.poll();
             int r = cur.r;
             int c = cur.c;
             int k = cur.k;
-            int cnt = cur.cnt;
+            int move = cur.move;
 
             if (r == H - 1 && c == W - 1) {
-                result = Math.min(result, cnt);
+                result = Math.min(result, move);
                 return;
             }
 
@@ -58,31 +61,31 @@ public class P1600_말이되고픈원숭이 {
             visited[r][c][k] = true;
 
 
-            if (k > 0) {
-                for (int d = 0; d < deltas1.length; d++) {
+            if (k < K) { //말처럼 움직일 수 있으면
+                for (int d = 0; d < deltas1.length; d++) { //1씩 움직이는 경우
                     int nr = r + deltas1[d][0];
                     int nc = c + deltas1[d][1];
 
                     if (isValid(nr, nc) && !visited[nr][nc][k] && map[nr][nc] == 0){
-                        queue.add(new Node(nr, nc, k, cnt + 1));
+                        queue.add(new Node(nr, nc, k, move + 1));
                     }
                 }
 
-                for (int d = 0; d < deltas2.length; d++) {
+                for (int d = 0; d < deltas2.length; d++) { //말처럼 움직이는 경우
                     int nr = r + deltas2[d][0];
                     int nc = c + deltas2[d][1];
 
                     if (isValid(nr, nc) && !visited[nr][nc][k] && map[nr][nc] == 0) {
-                        queue.add(new Node(nr, nc, k - 1, cnt + 1));
+                        queue.add(new Node(nr, nc, k + 1, move + 1));
                     }
                 }
-            } else {
-                for (int d = 0; d < deltas1.length; d++) {
+            } else { //말처럼 움직일 수 없으면
+                for (int d = 0; d < deltas1.length; d++) { //1씩 움직이는 경우
                     int nr = r + deltas1[d][0];
                     int nc = c + deltas1[d][1];
 
                     if (isValid(nr, nc) && !visited[nr][nc][k] && map[nr][nc] == 0) {
-                        queue.add(new Node(nr, nc, k, cnt + 1));
+                        queue.add(new Node(nr, nc, k, move + 1));
                     }
                 }
             }
@@ -94,13 +97,13 @@ public class P1600_말이되고픈원숭이 {
         int r;
         int c;
         int k;
-        int cnt;
+        int move;
 
-        public Node(int r, int c, int k, int cnt) {
+        public Node(int r, int c, int k, int move) {
             this.r = r;
             this.c = c;
             this.k = k;
-            this.cnt = cnt;
+            this.move = move;
         }
     }
     private static boolean isValid(int r, int c) {
