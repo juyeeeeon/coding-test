@@ -22,7 +22,8 @@ public class P1_아파트색칠하기V2 {
 
         for (int i = 3; i <= 8; i++) {
             memoization[i][0] = memoization[i - 1][0] + memoization[i - 1][1]; //맨 윗층의 노란색은 모든 색 위에 올라갈 수 있음
-            memoization[i][1] = memoization[i - 2][0] + memoization[i - 2][1]; //맨 윗층의 파란색은 노란색 위에만 올라갈 수 있음
+//            memoization[i][1] = memoization[i - 2][0] + memoization[i - 2][1]; //맨 윗층의 파란색은 노란색 위에만 올라갈 수 있음
+            memoization[i][1] = memoization[i - 1][0]; //맨 윗층의 파란색은 노란색 위에만 올라갈 수 있음
         }
 
         System.out.println(memoization[8][0] + memoization[8][1]);
