@@ -32,12 +32,6 @@ public class P1074_ZV2 {
             return;
         }
 
-        //우리가 찾으려는 좌표가 아니고 크기가 1이면
-        if (n == 1) {
-            result++;
-            return;
-        }
-
         //크기가 n인 좌표평면 안에 우리가 찾으려는 좌표가 존재하지 않으면
         if (!(r >= startRow && r < startRow + n && c >= startCol && c < startCol + n)) {
             result += n * n;
