@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class P5644_무선충전V2 {
-    static int T, M, A, result; //테스트케이스, 총 이동 시간, BC의 개수, 출력할 결과
+    static int T, M, A; //테스트케이스, 총 이동 시간, BC의 개수
     static int[] C, P; //충전범위, 성능
     static int[][] personA, personB, BC; //좌표
     static int[][] deltas = {{0, 0}, {0, -1}, {1, 0}, {0, 1}, {-1, 0}};
