@@ -9,7 +9,6 @@ public class P5644_무선충전 {
     static int T, M, A, result;
     static int[][] P1, P2;
     static int[][] BC;
-    static int[][] deltas = {{0, 0}, {0, -1}, {1, 0}, {0, 1}, {-1, 0}};
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
