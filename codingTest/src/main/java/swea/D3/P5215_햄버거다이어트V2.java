@@ -9,7 +9,6 @@ import java.util.StringTokenizer;
 
 public class P5215_햄버거다이어트V2 {
     static int N, L, maxTaste;
-    static ArrayList<Integer> result;
     static int[][] map;
 
     public static void main(String[] args) throws IOException {
@@ -21,7 +20,6 @@ public class P5215_햄버거다이어트V2 {
             StringTokenizer st = new StringTokenizer(br.readLine());
             N = Integer.parseInt(st.nextToken());
             L = Integer.parseInt(st.nextToken());
-            result = new ArrayList<>();
             map = new int[N][2]; //[][0]:맛점수, [][1]:칼로리
             for (int i = 0; i < N; i++) {
                 st = new StringTokenizer(br.readLine());
