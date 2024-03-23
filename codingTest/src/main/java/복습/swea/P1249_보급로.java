@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.PriorityQueue;
 
 public class P1249_보급로 {
-    static int T, N;
+    static int T, N, answer;
     static int[][] deltas = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
     static boolean[][] visited;
     static int[][] map;
@@ -26,8 +26,11 @@ public class P1249_보급로 {
                 }
             }
 
+            answer = Integer.MAX_VALUE;
             visited = new boolean[N][N];
             bfs();
+
+            System.out.println("#" + test_case + " " + answer);
         }
     }
 
@@ -39,16 +42,20 @@ public class P1249_보급로 {
         while (!pq.isEmpty()) {
             int[] cur = pq.poll();
 
+            if (cur[0] == N - 1 && cur[1] == N - 1) {
+                answer = cur[2];
+                return;
+            }
 
             for (int d = 0; d < deltas.length; d++) {
                 int nr = cur[0] + deltas[d][0];
                 int nc = cur[1] + deltas[d][1];
 
                 if (isValid(nr, nc) && !visited[nr][nc]) {
-                    pq.add(new int[]{nr, nc, cur[2]})
+                    pq.add(new int[]{nr, nc, cur[2] + map[nr][nc]});
+                    visited[nr][nc] = true;
                 }
             }
-
         }
     }
 
