@@ -16,12 +16,10 @@ public class 아이템줍기 {
     public static int solution(int[][] rectangle, int characterX, int characterY, int itemX, int itemY) {
         int answer = Integer.MAX_VALUE;
 
-        Queue<int[]> queue = new ArrayDeque<>();
         boolean[][] visited = new boolean[102][102];
 
-        queue.add(new int[]{characterX * 2, characterY * 2, 0});
-        visited[characterX * 2][characterY * 2] = true;
 
+        //테두리 안쪽 visited = true 로
         for (int[] rec : rectangle) {
             for (int x = rec[0] * 2 + 1; x < 2 * rec[2]; x++) {
 
@@ -31,6 +29,10 @@ public class 아이템줍기 {
                 }
             }
         }
+
+        Queue<int[]> queue = new ArrayDeque<>();
+        queue.add(new int[]{characterX * 2, characterY * 2, 0});
+        visited[characterX * 2][characterY * 2] = true;
 
         while (!queue.isEmpty()) {
             int[] cur = queue.poll();
