@@ -33,11 +33,12 @@ public class P15649_N과M1 {
         }
 
         for (int i = 1; i <= N; i++) {
-            if (visited[i]) continue;
-
+            if (visited[i]) continue; //수열은 순서가 상관있으므로 visited 배열 사용
             visited[i] = true;
+
             buffer[idx] = i;
             perm(idx + 1);
+
             visited[i] = false;
         }
     }
