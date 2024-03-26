@@ -6,7 +6,7 @@ import java.util.StringTokenizer;
 public class P12865_평범한배낭 {
     static int N, K;
     static int[][] item;
-    static int[][] memo;
+    static int[][] dp;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -23,21 +23,21 @@ public class P12865_평범한배낭 {
             item[i][1] = Integer.parseInt(st.nextToken()); //가치
         }
 
-        memo = new int[N+1][K+1];
+        dp = new int[N+1][K+1];
 
         for (int idx = 1; idx <= N; idx++) { //아이템의 idx
             for (int space = 1; space <= K; space++) { //남은 무게
 
                 //담을 수 없을 경우
                 if (item[idx][0] > space) {
-                    memo[idx][space] = memo[idx-1][space];
+                    dp[idx][space] = dp[idx-1][space];
                 } else { //담을 수 있는 경우
-                    memo[idx][space] = Math.max(memo[idx - 1][space], item[idx][1] + memo[idx - 1][space - item[idx][0]]); //담지 않았을 때와 담았을 때의 최대값
+                    dp[idx][space] = Math.max(dp[idx - 1][space], item[idx][1] + dp[idx - 1][space - item[idx][0]]); //담지 않았을 때와 담았을 때의 최대값
                 }
             }
         }
 
-        System.out.println(memo[N][K]);
+        System.out.println(dp[N][K]);
 
 
         /**
