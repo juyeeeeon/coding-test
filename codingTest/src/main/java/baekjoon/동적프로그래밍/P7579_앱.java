@@ -1,4 +1,4 @@
-package baekjoon;
+package baekjoon.동적프로그래밍;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,19 +30,20 @@ public class P7579_앱 {
             totalCost += c[i] = Integer.parseInt(st.nextToken());
         }
 
-        dp = new int[N + 1][totalCost + 1]; // i번째 앱까지 탐색하여 j비용을 소모해서 얻은 메모리 최대값
+        dp = new int[N + 1][totalCost + 1]; // 확보할 수 있는 메모리 최대값 = [i번째 앱까지를 고려][소모 가능한 비용]
         for (int i = 1; i <= N; i++) {
             for (int j = 0; j <= totalCost; j++) {
-                if (j >= c[i]) {
+                if (j >= c[i]) { // 소모 가능한 비용(j)이 i번째 앱의 비용보다 클 때 => i번째 앱을 비활성화 할 수 있을 때
+                    //확보할 수 있는 메모리 최대값 = i-1번째 앱까지 고려하여 j-c[i]비용을 소모했을 때 메모리 최대값 + i번째 앱의 메모리 크기
                     dp[i][j] = dp[i - 1][j - c[i]] + m[i];
                 }
-                dp[i][j] = Math.max(dp[i][j], dp[i - 1][j]);
+                dp[i][j] = Math.max(dp[i][j], dp[i - 1][j]); //dp[i-1][j] : i번째 앱을 비활성화 하지 않았을 때 메모리 최대값
             }
         }
 
-        for(int i =0 ;i<=totalCost ; i++) {
-            if (dp[N][i] >= M) { //전체를 탐색하고 얻은 메모리가 M이상일 경우의 cost return
-
+        //적은 비용부터 탐색하여 확보할 수 있는 메모리 최대값이 M이상이면 리턴
+        for (int i = 0; i <= totalCost; i++) {
+            if (dp[N][i] >= M) {
                 System.out.println(i);
                 return;
             }
