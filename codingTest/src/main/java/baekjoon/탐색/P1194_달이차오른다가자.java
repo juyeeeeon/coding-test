@@ -1,4 +1,4 @@
-package baekjoon;
+package baekjoon.탐색;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -54,29 +54,27 @@ public class P1194_달이차오른다가자 {
             int move = cur[2];
             int key = cur[3];
 
-            if (map[r][c] == 1) {
-                minMove = move;
-                return;
-            }
-
             for (int d = 0; d < deltas.length; d++) {
                 int nr = r + deltas[d][0];
                 int nc = c + deltas[d][1];
 
                 if (isValid(nr, nc) && map[nr][nc] != '#' && !visited[nr][nc][key]) {
-                    System.out.println(1 << (map[nr][nc] - 'A'));
-                    System.out.println((key & (1 << (map[nr][nc] - 'A'))) == 1);
-
                     if (map[nr][nc] >= 'a' && map[nr][nc] <= 'f') {
                         int newKey = key | (1 << (map[nr][nc] - 'a'));
                         queue.add(new int[]{nr, nc, move + 1, newKey});
                         visited[nr][nc][newKey] = true;
-                    } else if (map[nr][nc] >= 'A' && map[nr][nc] <= 'F' && (key & (1<<(map[nr][nc] - 'A'))) == 1 ) {
+
+                    } else if (map[nr][nc] >= 'A' && map[nr][nc] <= 'F' && (key & (1<<(map[nr][nc] - 'A'))) != 0 ) {
                         queue.add(new int[]{nr, nc, move + 1, key});
                         visited[nr][nc][key] = true;
-                    } else {
+
+                    } else if(map[nr][nc] == '.'){
                         queue.add(new int[]{nr, nc, move + 1, key});
                         visited[nr][nc][key] = true;
+                    }
+                    else if (map[nr][nc] == '1') {
+                        minMove = move + 1;
+                        return;
                     }
                 }
             }
