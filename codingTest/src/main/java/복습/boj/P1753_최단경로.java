@@ -58,6 +58,8 @@ public class P1753_최단경로 {
             Node cur = pq.poll();
 
             //한 노드에 대해 여러 경로를 고려하므로, 더 정확한 최단 거리를 계산할 수 있다.
+            //한 노드가 우선순위 큐에 여러 번 추가될 수 있으며, 이는 다양한 경로를 통한 최단 거리 계산을 가능
+            //노드에 대한 최단 거리가 확정된 후에 방문 처리
             if (visited[cur.vertex]) continue;
             visited[cur.vertex] = true;
 

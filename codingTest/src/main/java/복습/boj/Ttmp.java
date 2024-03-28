@@ -1,150 +1,84 @@
 package 복습.boj;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Ttmp {
-    static int T, N, minLen, maxNum;
+    static int K, W, H, minResult;
     static int[][] map;
-    static ArrayList<int[]> cores;
-    static int[][] deltas = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}}; //상 하 좌 우
+    static boolean[][][] visited;
+    static int[][] deltas = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
+    static int[][] horse = {{-1, -2}, {-2, -1}, {-2, 1}, {-1, 2}, {1, 2}, {2, 1}, {2, -1}, {1, -2}};
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        T = Integer.parseInt(br.readLine());
+        K = Integer.parseInt(br.readLine());
 
-        for (int test_case = 1; test_case <= T; test_case++) {
-            N = Integer.parseInt(br.readLine());
-            map = new int[N][N];
-            cores = new ArrayList<>();
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        W = Integer.parseInt(st.nextToken());
+        H = Integer.parseInt(st.nextToken());
 
-            for (int r = 0; r < N; r++) {
-                StringTokenizer st = new StringTokenizer(br.readLine());
-                for (int c = 0; c < N; c++) {
-                    map[r][c] = Integer.parseInt(st.nextToken());
-                    if (map[r][c] == 1 && r != 0 && r != N - 1 && c != 0 && c != N - 1) {
-                        cores.add(new int[]{r, c});
+        map = new int[H][W];
+
+        for (int i = 0; i < H; i++) {
+            st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < W; j++) {
+                map[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+
+        minResult = Integer.MAX_VALUE;
+        visited = new boolean[H][W][K + 1];
+        bfs();
+
+        if (minResult == Integer.MAX_VALUE) System.out.println(-1);
+        else System.out.println(minResult);
+    }
+
+    private static void bfs() {
+        PriorityQueue<int[]> pq = new PriorityQueue<>((o1, o2) -> o1[2] - o2[2]);
+        pq.add(new int[]{0, 0, 0, 0}); //[r][c][몇번움직였는지][말처럼움직인횟수]
+        visited[0][0][0] = true;
+
+        while (!pq.isEmpty()) {
+            int[] cur = pq.poll();
+
+            if (cur[0] == H - 1 && cur[1] == W - 1) {
+                minResult = cur[2];
+                return;
+            }
+
+            //말처럼 이동할 때
+            if (cur[3] < K) {
+                for (int d = 0; d < horse.length; d++) {
+                    int nr = cur[0] + horse[d][0];
+                    int nc = cur[1] + horse[d][1];
+
+                    if (isValid(nr, nc) && !visited[nr][nc][cur[3] + 1] && map[nr][nc] != 1) {
+                        pq.add(new int[]{nr, nc, cur[2] + 1, cur[3] + 1});
+                        visited[nr][nc][cur[3] + 1] = true;
                     }
                 }
             }
 
-            minLen = Integer.MAX_VALUE;
-            maxNum = Integer.MIN_VALUE;
-            if (cores.isEmpty()) System.out.println("#" + test_case + " " + 0);
-            else {
-                dfs(0, 0, 0);
-                System.out.println("#" + test_case + " " + minLen);
+            //원숭이처럼 이동할 때
+            for (int d = 0; d < deltas.length; d++) {
+                int nr = cur[0] + deltas[d][0];
+                int nc = cur[1] + deltas[d][1];
+
+                if (isValid(nr, nc) && !visited[nr][nc][cur[3]] && map[nr][nc] != 1) {
+                    pq.add(new int[]{nr, nc, cur[2] + 1, cur[3]});
+                    visited[nr][nc][cur[3]] = true;
+                }
             }
-
         }
-
     }
 
-    private static void dfs(int idx, int connectedCoreNum, int connectedLine) {
-        if (idx == cores.size()) {
-            if (connectedCoreNum > maxNum) {
-                maxNum = connectedCoreNum;
-                minLen = connectedLine;
-            }
-            if (connectedCoreNum == maxNum && connectedLine < minLen) {
-                minLen = connectedLine;
-            }
-
-            return;
-        }
-
-        for (int d = 0; d < deltas.length; d++) {
-            boolean canConnect = canConnect(d, cores.get(idx));
-            if(canConnect){
-                int cnt = fill(d, cores.get(idx), 9);
-                dfs(idx + 1, connectedCoreNum + 1, connectedLine + cnt);
-                fill(d, cores.get(idx), 0);
-            }
-        }
-        dfs(idx+1, connectedCoreNum, connectedLine);
-    }
-    private static boolean canConnect(int d, int[] core) {
-        int r = core[0];
-        int c = core[1];
-
-        while (true) {
-            r += deltas[d][0];
-            c += deltas[d][1];
-
-            if(r < 0 || c < 0 || r >= N || c >= N) break;
-
-            if (map[r][c] != 0) return false;
-        }
-
-        /* if (d == 0) { //상
-            for (int r = core[0]-1; r >= 0; r--) {
-                if(map[r][core[1]] != 0) return false;
-            }
-
-        } else if (d == 1) { //하
-            for (int r = core[0]+1; r < N; r++) {
-                if(map[r][core[1]] != 0) return false;
-            }
-
-        } else if (d == 2) { //좌
-            for (int c = core[1]-1; c >= 0; c--) {
-                if(map[core[0]][c] != 0) return false;
-            }
-
-        } else { //우
-            for (int c = core[1]+1; c <N; c++) {
-                if(map[core[0]][c] != 0) return false;
-            }
-
-        }
-*/
-        return true;
-    }
-
-    private static int fill(int d, int[] core, int num) {
-        int cnt = 0;
-
-        int r = core[0];
-        int c = core[1];
-
-        while (true) {
-            r += deltas[d][0];
-            c += deltas[d][1];
-
-            if(r < 0 || c < 0 || r >= N || c >= N) break;
-
-            cnt++;
-            map[r][c] = num;
-        }
-
-
-        /*if (d == 0) { //상
-            for (int r = core[0]-1; r >= 0; r--) {
-                map[r][core[1]] = num;
-                cnt++;
-            }
-        } else if (d == 1) { //하
-            for (int r = core[0]+1; r < N; r++) {
-                map[r][core[1]] = num;
-                cnt++;
-            }
-
-        } else if (d == 2) { //좌
-            for (int c = core[1]-1; c >= 0; c--) {
-                map[core[0]][c] = num;
-                cnt++;
-            }
-
-        } else { //우
-            for (int c = core[1]+1; c < N; c++) {
-                map[core[0]][c] = num;
-                cnt++;
-            }
-        }
-*/
-        return cnt;
+    private static boolean isValid(int r, int c) {
+        return r >= 0 && c >= 0 && r < H && c < W;
     }
 }

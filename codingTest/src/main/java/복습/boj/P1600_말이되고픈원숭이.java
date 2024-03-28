@@ -14,8 +14,8 @@ public class P1600_말이되고픈원숭이 {
     static int K, W, H;
     static int minMove = Integer.MAX_VALUE;
     static int[][] map;
-    static int[][] deltas1 = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-    static int[][] deltas2 = {{-1, -2}, {-2, -1}, {-2, 1}, {-1, 2}, {1, 2}, {2, 1}, {2, -1}, {1, -2}};
+    static int[][] deltas = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    static int[][] horse = {{-1, -2}, {-2, -1}, {-2, 1}, {-1, 2}, {1, 2}, {2, 1}, {2, -1}, {1, -2}};
     static boolean[][][] visited;
 
     public static void main(String[] args) throws IOException {
@@ -55,43 +55,32 @@ public class P1600_말이되고픈원숭이 {
             int move = cur[3];
 
             if (r == H - 1 && c == W - 1) {
-                minMove = Math.min(minMove, move);
+                minMove = move;
                 return;
             }
 
-            if (visited[r][c][k]) continue;
-            visited[r][c][k] = true;
-
             if (k < K) {
-                //원숭이처럼 이동
-                for (int d = 0; d < deltas1.length; d++) {
-                    int nr = r + deltas1[d][0];
-                    int nc = c + deltas1[d][1];
-
-                    if (isValid(nr, nc) && !visited[nr][nc][k] && map[nr][nc] == 0) {
-                        queue.add(new int[]{nr, nc, k, move + 1});
-                    }
-                }
-
                 //말처럼 이동
-                for (int d = 0; d < deltas2.length; d++) {
-                    int nr = r + deltas2[d][0];
-                    int nc = c + deltas2[d][1];
+                for (int d = 0; d < horse.length; d++) {
+                    int nr = r + horse[d][0];
+                    int nc = c + horse[d][1];
 
-                    if (isValid(nr, nc) && !visited[nr][nc][k] && map[nr][nc] == 0) {
+                    if (isValid(nr, nc) && !visited[nr][nc][k + 1] && map[nr][nc] == 0) {
                         queue.add(new int[]{nr, nc, k + 1, move + 1});
+                        visited[nr][nc][k + 1] = true;
                     }
                 }
 
-            } else {
-                //원숭이처럼 이동
-                for (int d = 0; d < deltas1.length; d++) {
-                    int nr = r + deltas1[d][0];
-                    int nc = c + deltas1[d][1];
+            }
 
-                    if (isValid(nr, nc) && !visited[nr][nc][k] && map[nr][nc] == 0) {
-                        queue.add(new int[]{nr, nc, k, move + 1});
-                    }
+            //원숭이처럼 이동
+            for (int d = 0; d < deltas.length; d++) {
+                int nr = r + deltas[d][0];
+                int nc = c + deltas[d][1];
+
+                if (isValid(nr, nc) && !visited[nr][nc][k] && map[nr][nc] == 0) {
+                    queue.add(new int[]{nr, nc, k, move + 1});
+                    visited[nr][nc][k] = true;
                 }
             }
         }

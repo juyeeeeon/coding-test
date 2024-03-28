@@ -9,7 +9,7 @@ import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 /**
- * 다익스트라
+ * 다익스트라(ElogV)
  * 시작점으로부터 PriorityQueue을 사용하여 Distance 배열 업데이트
  *
  * 1) 인접리스트로 그래프 구현
