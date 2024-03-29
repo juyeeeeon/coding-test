@@ -10,6 +10,7 @@ import java.util.StringTokenizer;
 
 /**
  * 위상정렬
+ * 진입차수 배열을 만들어서 진입차수가 0인 것을 출력
  */
 public class P2252_줄세우기 {
     static int N, M;
@@ -37,10 +38,6 @@ public class P2252_줄세우기 {
             inDegrees[e]++; //진입차수 증가
         }
 
-        bfs();
-    }
-
-    private static void bfs() {
         Queue<Integer> queue = new ArrayDeque<>();
 
         //진입차수가 0인 정점찾아 큐에 넣기
@@ -58,4 +55,5 @@ public class P2252_줄세우기 {
             }
         }
     }
+
 }

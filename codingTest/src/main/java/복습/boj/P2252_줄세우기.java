@@ -10,6 +10,10 @@ import java.util.StringTokenizer;
 
 /**
  * 위상정렬
+ * 진입차수 배열을 만들어서 진입차수가 0인 것을 Queue에 넣고
+ * Queue에서 꺼내 출력 후, 진입차수 배열 업데이트
+ * 반복
+ *
  */
 public class P2252_줄세우기 {
     static int N, M;
