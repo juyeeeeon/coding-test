@@ -15,7 +15,7 @@ public class P1806_부분합V2 {
         N = Integer.parseInt(st.nextToken());
         S = Integer.parseInt(st.nextToken());
 
-        arr = new int[N];
+        arr = new int[N+1];
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
             arr[i] = Integer.parseInt(st.nextToken());
@@ -24,21 +24,14 @@ public class P1806_부분합V2 {
         min = Integer.MAX_VALUE;
         int s = 0;
         int e = 0;
-        int sum = arr[s];
+        int sum = 0;
 
-        while (s < N && e < N) {
+        while (s <= N && e <= N) {
             if (sum < S) {
-                e++;
-                if (e > N - 1) {
-                    break;
-                }
-                sum += arr[e];
-            }
-
-            if (sum >= S) {
-                min = Math.min(min, e - s + 1);
-                sum -= arr[s];
-                s++;
+                sum += arr[e++];
+            } else{
+                min = Math.min(min, e - s);
+                sum -= arr[s++];
             }
         }
 

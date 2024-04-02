@@ -19,21 +19,19 @@ public class P1806_부분합 {
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
             arr[i] = Integer.parseInt(st.nextToken());
-            if (arr[i] >= S) {
-                System.out.println(1);
-                return;
-            }
         }
 
         min = Integer.MAX_VALUE;
         int s = 0;
-        int e = 1;
-        int sum = arr[s] + arr[e];
+        int e = 0;
+        int sum = arr[s];
 
-        while (true) {
+        while (s < N && e < N) {
             if (sum < S) {
                 e++;
-                if (e > arr.length-1) break;
+                if (e > N - 1) {
+                    break;
+                }
                 sum += arr[e];
             }
 
@@ -42,14 +40,6 @@ public class P1806_부분합 {
                 sum -= arr[s];
                 s++;
             }
-
-            if (e < s || s >= arr.length - 1) {
-                break;
-            }
-        }
-
-        if (sum >= S) {
-            min = Math.min(min, e - s + 1);
         }
 
         if (min == Integer.MAX_VALUE) System.out.println(0);
