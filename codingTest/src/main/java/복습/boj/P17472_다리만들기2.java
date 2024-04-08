@@ -1,3 +1,4 @@
+/*
 package 복습.boj;
 
 import java.io.BufferedReader;
@@ -98,9 +99,11 @@ public class P17472_다리만들기2 {
     }
 
 
-    /**
+    */
+/**
      * 섬 넘버링
-     */
+     *//*
+
     private static void bfs(int i, int j) {
         Queue<int[]> queue = new ArrayDeque<>();
         queue.add(new int[]{i, j});
@@ -130,3 +133,4 @@ public class P17472_다리만들기2 {
         return r >= 0 && c >= 0 && r < N && c < M;
     }
 }
+*/
