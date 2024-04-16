@@ -18,9 +18,9 @@ public class P21608_상어초등학교 {
         StringTokenizer st = null;
         N = Integer.parseInt(br.readLine());
 
-        order = new int[N * N + 1];
+        order = new int[N * N + 1]; //학생의 순서
         map = new int[N][N];
-        arr = new int[N * N + 1][4];
+        arr = new int[N * N + 1][4]; //학생이 좋아하는 학생들의 번호
 
         for (int i = 1; i < N * N + 1; i++) {
             st = new StringTokenizer(br.readLine());
@@ -39,15 +39,15 @@ public class P21608_상어초등학교 {
     }
 
     private static void turn(int cnt) {
-        if (cnt == N * N + 1) {
+        if (cnt == N * N + 1) { //모든 학생의 자리가 정해졌을 때
             getSatisfaction();
             return;
         }
 
-        getPosition(cnt);
+        getPosition(cnt); //현재 턴의 학생의 자리 찾기
         Seat cur = pq.poll();
         map[cur.r][cur.c] = order[cnt];
-        turn(cnt + 1);
+        turn(cnt + 1); //다음 턴의 학생으로
     }
 
     private static void getPosition(int cnt) {
@@ -73,6 +73,12 @@ public class P21608_상어초등학교 {
         }
     }
 
+    /**
+     *
+     * @param cnt : 현재 턴
+     * @param j : map[nr][nc]
+     * @return  : 현재 턴의 학생이 좋아하는 학생이 j인지
+     */
     private static boolean likes(int cnt, int j) {
         for (int num : arr[order[cnt]]) {
             if (num == j) return true;

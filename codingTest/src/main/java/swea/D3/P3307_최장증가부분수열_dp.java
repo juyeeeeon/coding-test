@@ -21,7 +21,7 @@ public class P3307_최장증가부분수열_dp {
         for (int test_case = 1; test_case <= T; test_case++) {
             N = Integer.parseInt(br.readLine());
             arr = new int[N];
-            lis = new int[N];
+            lis = new int[N]; //arr[i]를 부분 수열의 마지막으로 포함하는 최대 길이
 
             st = new StringTokenizer(br.readLine());
             for (int i = 0; i < N; i++) {
