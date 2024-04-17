@@ -8,6 +8,10 @@ import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
+/**
+ * 다익스트라(Dijkstra)
+ * ArrayList<Node>, distance[], visited, PriorityQueue
+ */
 public class P1753_최단경로 {
     static int V, E, K;
     static int[] distance;
