@@ -19,11 +19,12 @@ public class P1446_지름길 {
         N = Integer.parseInt(st.nextToken());
         D = Integer.parseInt(st.nextToken());
 
-        arr = new ArrayList[D + 1];
+        arr = new ArrayList[D + 1]; //[0,D]
         for (int i = 0; i < D; i++) {
             arr[i] = new ArrayList<>();
             arr[i].add(new Node(i + 1, 1));
         }
+        arr[D] = new ArrayList<>();
 
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
@@ -31,14 +32,15 @@ public class P1446_지름길 {
             int e = Integer.parseInt(st.nextToken());
             int c = Integer.parseInt(st.nextToken());
 
+            if(e > D) continue;
             arr[s].add(new Node(e, c));
         }
 
-        distance = new int[D + 1];
+        distance = new int[D + 1]; //[0,D]
         Arrays.fill(distance, Integer.MAX_VALUE);
         distance[0] = 0;
 
-        boolean[] visited = new boolean[D + 1];
+        boolean[] visited = new boolean[D + 1]; //[0,D]
         PriorityQueue<Node> pq = new PriorityQueue<>();
         pq.add(new Node(0, 0));
         while (!pq.isEmpty()) {
@@ -48,7 +50,7 @@ public class P1446_지름길 {
             visited[cur.n] = true;
 
             for (Node next : arr[cur.n]) {
-                if (distance[next.n]>distance[cur.n]+next.c){
+                if (distance[next.n] > distance[cur.n] + next.c){
                     distance[next.n] = distance[cur.n]+ next.c;
                     pq.add(new Node(next.n, distance[next.n]));
                 }
