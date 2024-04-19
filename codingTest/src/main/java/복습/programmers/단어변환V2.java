@@ -1,4 +1,4 @@
-package 복습.boj;
+package 복습.programmers;
 
 
 public class 단어변환V2 {

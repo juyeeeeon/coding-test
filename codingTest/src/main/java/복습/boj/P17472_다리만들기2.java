@@ -10,6 +10,7 @@ import java.util.StringTokenizer;
 
 public class P17472_다리만들기2 {
     static int N, M, region;
+    static int[] parents;
     static PriorityQueue<int[]> pq;
     static boolean[][] visited;
     static int[][] map;
@@ -42,13 +43,6 @@ public class P17472_다리만들기2 {
 
         region -= 1;
 
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                System.out.print(map[i][j] + " ");
-            }
-            System.out.println();
-        }
-
         //섬을 연결하는 모든 다리 구하기
         pq = new PriorityQueue<>((o1, o2) -> o1[2] - o2[2]);
 
@@ -63,22 +57,46 @@ public class P17472_다리만들기2 {
             }
         }
 
-        boolean[] visitIslands = new boolean[region + 1];
+        parents = new int[region + 1];
+        for (int i = 0; i < parents.length; i++) {
+            parents[i] = i;
+        }
+
+        int answer = 0;
         int numOfBridge = 0;
-        while (true) {
+        while (!pq.isEmpty()) {
             if (numOfBridge == region - 1) {
-                return;
+                break;
             }
+            int[] cur = pq.poll();
+            int start = cur[0];
+            int end = cur[1];
+            int len = cur[2];
 
-            if ()
+            if (find(start) != find(end)) {
+                union(start, end);
+                answer += len;
+                numOfBridge++;
+            }
         }
 
+        //!!!!!!!!!!!
+        if (numOfBridge != region - 1) System.out.println(-1);
+        else System.out.println(answer);
 
-        for (int[] ints : pq) {
-            System.out.println(ints[0] + " " + ints[1] + " " + ints[2]);
-        }
+    }
 
+    private static void union(int start, int end) {
+        int rootStart = find(start);
+        int rootEnd = find(end);
 
+        if (rootStart != rootEnd) parents[rootEnd] = rootStart; //!!!!!!!!!
+    }
+
+    private static int find(int start) {
+        if (parents[start] == start) return start;
+
+        return parents[start] = find(parents[start]);
     }
 
     private static void makeBridge(int i, int j, int start, int cnt, int d) {
@@ -88,7 +106,9 @@ public class P17472_다리만들기2 {
         if (!isValid(nr, nc)) return;
         if (map[nr][nc] == start) return;
 
-        if (map[nr][nc] > 0 && cnt > 1) {
+        if (map[nr][nc] > 0){
+            if (cnt <= 1) return;
+
             pq.add(new int[]{start, map[nr][nc], cnt});
             return;
         }
