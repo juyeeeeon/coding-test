@@ -25,33 +25,39 @@ public class P13549_숨바꼭질3 {
 
     }
 
+    /**
+     * 먼저 방문한 곳이 최소시간을 보장해주지 않는다!!
+     */
     private static void BFS() {
-        PriorityQueue<int[]> queue = new PriorityQueue<>((o1, o2) -> o1[1] - o2[1]);
+        Queue<int[]> queue = new ArrayDeque<>();
         queue.add(new int[]{N, 0});
+        visited[N] = true;
 
         while (!queue.isEmpty()) {
             int[] now = queue.poll();
             int cur = now[0];
             int time = now[1];
 
-            if (cur == K) {
-                minTime = time;
-            }
-
-            if (visited[cur]) continue;
             visited[cur] = true;
+            if (cur == K) {
+                minTime = Math.min(minTime, time);
+                continue;
+//                return;
+            }
 
             int[] deltas = getDeltas(cur);
             for (int d = 0; d < deltas.length; d++) {
                 int np = deltas[d];
                 if (np < 0 || np > 100000 || visited[np]) continue;
-                if (d == 2) queue.add(new int[]{np, time});
+                if (d == 0) queue.add(new int[]{np, time});
                 else queue.add(new int[]{np, time + 1});
+
+//                visited[np] = true;
             }
         }
     }
 
     private static int[] getDeltas(int n){
-        return new int[]{n * 2, n - 1, n + 1};
+        return new int[]{n * 2, n + 1, n - 1};
     }
 }
