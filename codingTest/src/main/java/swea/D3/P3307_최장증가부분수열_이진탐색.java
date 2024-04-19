@@ -28,19 +28,17 @@ public class P3307_최장증가부분수열_이진탐색 {
                 arr[i] = Integer.parseInt(st.nextToken());
             }
 
-            int size = 1;
+            int size = 1; //최장증가수열의 크기
             Arrays.fill(lis, Integer.MAX_VALUE);
             lis[0] = arr[0];
             for (int i = 1; i < N; i++) {
                 if (lis[size - 1] > arr[i]) {
                     // 이진 탐색으로 O(logN)
                     int index = Arrays.binarySearch(lis, arr[i]);
-                    if (index >= 0) { //lis에 arr[i]값이 존재하면
-                        lis[index] = arr[i];
-                    } else { //lis에 arr[i]값이 존재하지 않는다면 (-insertion position-1)반환
+                    if (index < 0) { //lis에 arr[i]값이 존재하지 않는다면 (-insertion position-1)반환
                         lis[-index - 1] = arr[i];
                     }
-                } else if (lis[size - 1] < arr[i]) {
+                } else if(lis[size-1] < arr[i]){
                     lis[size++] = arr[i];
                 }
             }
