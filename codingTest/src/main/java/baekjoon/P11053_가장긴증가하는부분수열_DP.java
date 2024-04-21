@@ -26,7 +26,7 @@ public class P11053_가장긴증가하는부분수열_DP {
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        LIS = new int[N]; //arr[i]를 부분 수열의 마지막으로 포함하는 최대 길이
+        LIS = new int[N]; //arr[i]를 부분수열의 마지막으로 포함하는 최대길이
 
         for (int i = 0; i < N; i++) {
             LIS[i] = 1;
